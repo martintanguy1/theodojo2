@@ -13,11 +13,14 @@ async function handler(_req: Request): Promise<Response> {
     return handlePreFlightRequest();
   }
 
+  const url = new URL(_req.url);                              // "https://mondomaine/éléphant" → objet URL
+  const userWord = decodeURIComponent(url.pathname.slice(1))
+
   const headers = new Headers();
   headers.append("Content-Type", "application/json");
 
   const similarityRequestBody = JSON.stringify({
-    word1: "centrale",
+    word1: userWord,
     word2: "supelec",
   });
 
